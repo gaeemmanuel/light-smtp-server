@@ -1,59 +1,99 @@
-# LightSmtpServer
+# Light SMTP Server
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.1.
 
-## Development server
+## Configure
 
-To start a local development server, run:
+Before starting, we need to configure everything needed to get started.
 
-```bash
-ng serve
+```ts
+// src/environments/environment.development
+
+export const environment = {
+  socket: {
+    // The frontend will connect to socket via this URL
+    url: "ws://localhost:9090",
+    // The socket server will listen to this port
+    port: 9090,
+  },
+  smtp: {
+    // The SMTP server will be accessible via this hostname
+    hostname: "127.0.0.1",
+    // The SMTP server will listen to this port on provided hostname
+    port: 25,
+  },
+};
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Start
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+To start a local development server and start listening to server, just run the commands:
 
 ```bash
-ng generate component component-name
+# For starting the SMTP server
+npm run server
+
+# For starting angular
+npm run start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+If you're using **VS Code** and have the **Terminals Manager** extension installed, you can use: **Ctrl + Shift + P** then execute the command **Terminals: Run**
+
+Once the modules are running, open your browser and navigate to `http://localhost:4200/`.
+
+## Test server
+
+In order to verify that everything is working fine, we will use a **telnet** client.
+
+Open a CLI, run the following commands (hit Enter button between after line).
 
 ```bash
-ng generate --help
+# Replace 127.0.0.1 by your SMTP hostname and 25 by your SMTP port
+EHLO 127.0.0.1
+MAIL FROM: <sender@example.com>
+RCPT TO: <recipient@example.com>
+DATA
+From: sender@example.com
+To: new-recipient@example.com
+Subject: Telnet email
+
+This is my first test message sent using the Telnet client on Windows
+<p>This is good</p>
+.
 ```
 
-## Building
-
-To build the project run:
+See the lines below for example of responses:
 
 ```bash
-ng build
+# Replace 127.0.0.1 by your SMTP hostname and 25 by your SMTP port
+telnet 127.0.0.1 25
+>>> 220 LAPTOP-3600AH7H ESMTP
+
+EHLO 127.0.0.1
+>>> 250-LAPTOP-3600AH7H Nice to meet you, [127.0.0.1]
+>>> 250-PIPELINING
+>>> 250-8BITMIME
+>>> 250-SMTPUTF8
+>>> 250 STARTTLS
+
+MAIL FROM: <sender@example.com>
+>>> 250 2.1.0 Sender OK
+
+RCPT TO: <recipient@example.com>
+>>> 250 2.1.5 Recipient OK
+
+DATA
+>>> 354 Start mail input; end with <CRLF>.<CRLF>
+
+From: sender@example.com
+To: recipient@example.com
+Subject: Telnet email
+
+This is my first test message sent using the Telnet client on Windows
+.
+>>> 250 2.0.0 Ok: queued as ABC123456789
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Demo
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+When starting your application, you should see in your browser the following things (see docs folder).
