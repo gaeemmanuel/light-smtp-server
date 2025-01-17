@@ -97,3 +97,15 @@ This is my first test message sent using the Telnet client on Windows
 ## Demo
 
 When starting your application, you should see in your browser the following things (see docs folder).
+
+### Main page
+
+Every received mail is displayed on the main page.
+
+![Main page](https://raw.githubusercontent.com/gaeemmanuel/light-smtp-server/refs/heads/main/docs/main.png)
+
+### Mail details
+
+The body of each message can be displayed by clicking the row corresponding the targeted message.
+
+![Mail details](https://raw.githubusercontent.com/gaeemmanuel/light-smtp-server/refs/heads/main/docs/details.png)

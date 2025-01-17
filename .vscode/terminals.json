@@ -1,0 +1,17 @@
+{
+  "autorun": false,
+  "terminals": [
+    {
+      "name": "[Backend] Server",
+      "description": "SMTP and Socket servers",
+      "focus": false,
+      "command": "npm run server"
+    },
+    {
+      "name": "[Frontend] Client",
+      "description": "Angular client for frontend",
+      "focus": true,
+      "command": "npm run start"
+    }
+  ]
+}
