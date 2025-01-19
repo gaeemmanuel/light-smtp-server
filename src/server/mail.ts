@@ -60,11 +60,12 @@ class MailServer {
     const self = this;
     return new SMTPServer({
       onData(stream, session, callback) {
-        console.debug('stream AT', session);
+        console.debug('Connecting session', session.id);
         simpleParser(stream, {}, (err, parsed) => {
           if (err) {
             // 1. When an error occurs, we do nothing
-            console.error('Error:', err);
+            console.error('Error occurred during data receiving:', err);
+            callback(err);
             return;
           } else {
             // 2. We have to parse the received message
@@ -84,7 +85,7 @@ class MailServer {
             self.socketIo.emit(SocketEvent.mail_received, mail);
           }
 
-          stream.on('end', callback);
+          callback();
         });
       },
       disabledCommands: ['AUTH'],
