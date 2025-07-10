@@ -4,7 +4,7 @@ export const environment = {
     port: 9090,
   },
   smtp: {
-    hostname: '127.0.0.1',
+    hostname: '0.0.0.0',
     port: 25,
   },
 };
